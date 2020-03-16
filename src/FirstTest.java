@@ -148,6 +148,29 @@ public class FirstTest {
         Assert.assertEquals("Error in title of article", titleOfArticleInSavedList, titleOfArticle);
     }
 
+    @Test
+    public void assertElementPresent() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find 'Skip' button",
+                10);
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_container']//*[@class='android.widget.TextView']"),
+                "Cannot find 'Search' button",
+                10);
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot send text in 'Search' field",
+                10);
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title'][@text='Java']"),
+                "Cannot find article with text 'Java'",
+                15);
+        Assert.assertTrue("Title of article is missing",
+                driver.findElement(By.xpath("//*[@resource-id='content']//android.view.View[@index='0']")).isDisplayed());
+    }
+
     private void swipeElementToLeft(By by, String errorMessage) {
         WebElement element = waitForElementPresent(
                 by,
